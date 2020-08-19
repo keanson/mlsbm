@@ -1,0 +1,20 @@
+Package: mlsbm
+Title: Efficient Estimation of Bayesian SBMs & MLSBMs
+Version: 0.0.0.9000
+Authors@R: 
+    person(given = "Carter",
+           family = "Allen",
+           role = c("aut", "cre"),
+           email = "carter.allen12@gmail.com",
+           comment = c(ORCID = "0000-0001-6937-7234"))
+Description: The mlsbm package can be used to fit Bayesian 
+  stochastic block models (SBMs) and multi-level stochastic block models
+  (MLSBMs) using efficient Gibbs sampling implemented in Rcpp. The models
+  assume symmetric, non-reflexive graphs (no self-loops) with unweighted, binary edges.
+License: `use_mit_license()`
+Encoding: UTF-8
+LazyData: true
+Roxygen: list(markdown = TRUE)
+RoxygenNote: 7.1.0
+LinkingTo: Rcpp, RcppArmadillo
+Imports: Rcpp, RcppArmadillo

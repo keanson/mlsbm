@@ -11,7 +11,8 @@
 #' @keywords SBM, MLSBM, Gibbs sampling, Bayesian network models
 #' @export
 #' @examples
-#' # fit <- fit_mlsbm(A,K)
+#' data(AL)
+#' fit <- fit_mlsbm(AL,3)
 fit_mlsbm <- function(A,
                       K,
                       a0 = 0.5,

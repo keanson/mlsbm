@@ -4,16 +4,7 @@
 \alias{fit_sbm}
 \title{R/Rcpp function for fitting single level stochastic block model}
 \usage{
-fit_sbm(
-  A,
-  K,
-  a0 = 0.5,
-  b10 = 0.5,
-  b20 = 0.5,
-  n_iter = 1000,
-  burn = 100,
-  verbose = TRUE
-)
+fit_sbm(A, K, a0 = 0.5, b10 = 0.5, b20 = 0.5, n_iter = 1000, burn = 100)
 }
 \arguments{
 \item{A}{An n x n symmetric adjacency matrix.}
@@ -34,7 +25,8 @@ fit_sbm(
 This function allows you to fit single level stochastic block models.
 }
 \examples{
-# fit <- fit_sbm(A,K)
+data(AL)
+fit <- fit_sbm(AL[[1]],3)
 }
 \keyword{Bayesian}
 \keyword{Gibbs}

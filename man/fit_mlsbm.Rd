@@ -25,7 +25,8 @@ fit_mlsbm(A, K, a0 = 0.5, b10 = 0.5, b20 = 0.5, n_iter = 1000, burn = 100)
 This function allows you to fit multilevel stochastic block models.
 }
 \examples{
-# fit <- fit_mlsbm(A,K)
+data(AL)
+fit <- fit_mlsbm(AL,3)
 }
 \keyword{Bayesian}
 \keyword{Gibbs}

@@ -11,8 +11,8 @@
 #' @keywords SBM, MLSBM, Gibbs sampling, Bayesian network models
 #' @export
 #' @examples
-#' # fit <- fit_MLSBM(A,K)
-fit_MLSBM <- function(A,
+#' # fit <- fit_mlsbm(A,K)
+fit_mlsbm <- function(A,
                       K,
                       a0 = 0.5,
                       b10 = 0.5,
@@ -21,6 +21,7 @@ fit_MLSBM <- function(A,
                       burn = 100)
 {
     # Initialize parameters
+    n = dim(A[[1]])[1] # number of nodes
     K0 = K # putative number of clusters
     zs = sample(1:K0, 
                 size=n, 

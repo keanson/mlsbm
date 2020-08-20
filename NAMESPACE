@@ -2,6 +2,8 @@
 
 export(fit_mlsbm)
 export(fit_sbm)
+export(sample_mlsbm)
+export(sample_sbm)
 import(Rcpp)
 import(RcppArmadillo)
 useDynLib(mlsbm)

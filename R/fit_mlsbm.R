@@ -8,6 +8,7 @@
 #' @param b20 Beta distribution prior parameter for community connectivity.
 #' @param n_iter The number of total MCMC iterations to run.
 #' @param burn The number of burn-in MCMC iterations to discard. The number of saved iterations will be n_iter - burn.
+#' @param verbose Whether to print a progress bar to track MCMC progress. Defaults to true.
 #' @keywords SBM, MLSBM, Gibbs sampling, Bayesian network models
 #' @export
 #' @examples
@@ -19,7 +20,8 @@ fit_mlsbm <- function(A,
                       b10 = 0.5,
                       b20 = 0.5,
                       n_iter = 1000,
-                      burn = 100)
+                      burn = 100,
+                      verbose = TRUE)
 {
     # Initialize parameters
     n = dim(A[[1]])[1] # number of nodes
@@ -38,7 +40,7 @@ fit_mlsbm <- function(A,
     draw_logf_z_given_A = rep(0,n_sim) # P(z|Data) for MAP estimate of z
     
     start.time<-proc.time()
-    pb <- txtProgressBar(min = 0, max = n_iter, style = 3)
+    if(verbose) pb <- txtProgressBar(min = 0, max = n_iter, style = 3)
     for (i in 1:n_iter){
         
         # Step 1. pi
@@ -63,11 +65,11 @@ fit_mlsbm <- function(A,
             PM[j,,] = Ps
             draw_logf_z_given_A[j] = lz
         }
-        setTxtProgressBar(pb, i)
+        if(verbose) setTxtProgressBar(pb, i)
     }
-    close(pb)
+    if(verbose) close(pb)
     run.time<-proc.time()-start.time
-    cat("Finished MCMC after",run.time[1],"seconds")
+    if(verbose) cat("Finished MCMC after",run.time[1],"seconds")
     
     ret_list <- list(A = A,
                      K = K,

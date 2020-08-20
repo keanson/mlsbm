@@ -4,7 +4,16 @@
 \alias{fit_mlsbm}
 \title{R/Rcpp function for fitting multilevel stochastic block model}
 \usage{
-fit_mlsbm(A, K, a0 = 0.5, b10 = 0.5, b20 = 0.5, n_iter = 1000, burn = 100)
+fit_mlsbm(
+  A,
+  K,
+  a0 = 0.5,
+  b10 = 0.5,
+  b20 = 0.5,
+  n_iter = 1000,
+  burn = 100,
+  verbose = TRUE
+)
 }
 \arguments{
 \item{A}{An adjacency list of length L, the number of levels. Each level contains an n x n symmetric adjacency matrix.}
@@ -20,6 +29,8 @@ fit_mlsbm(A, K, a0 = 0.5, b10 = 0.5, b20 = 0.5, n_iter = 1000, burn = 100)
 \item{n_iter}{The number of total MCMC iterations to run.}
 
 \item{burn}{The number of burn-in MCMC iterations to discard. The number of saved iterations will be n_iter - burn.}
+
+\item{verbose}{Whether to print a progress bar to track MCMC progress. Defaults to true.}
 }
 \description{
 This function allows you to fit multilevel stochastic block models.

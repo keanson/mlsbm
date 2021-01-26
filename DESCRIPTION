@@ -1,6 +1,6 @@
 Package: mlsbm
 Title: Efficient Estimation of Bayesian SBMs & MLSBMs
-Version: 0.0.0.9000
+Version: 0.99.0
 Authors@R: 
     person(given = "Carter",
            family = "Allen",

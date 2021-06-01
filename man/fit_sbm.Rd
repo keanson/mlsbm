@@ -32,6 +32,9 @@ fit_sbm(
 
 \item{verbose}{Whether to print a progress bar to track MCMC progress. Defaults to true.}
 }
+\value{
+A list of MCMC samples, including the MAP estimate of cluster indicators (z)
+}
 \description{
 This function allows you to fit single level stochastic block models.
 }
@@ -41,8 +44,6 @@ fit <- fit_sbm(AL[[1]],3)
 }
 \keyword{Bayesian}
 \keyword{Gibbs}
-\keyword{MLSBM,}
-\keyword{SBM,}
-\keyword{models}
-\keyword{network}
-\keyword{sampling,}
+\keyword{MLSBM}
+\keyword{SBM}
+\keyword{networks}

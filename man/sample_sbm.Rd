@@ -11,6 +11,9 @@ sample_sbm(z, P)
 
 \item{P}{A K x K symmetric matrix of community connectivity probabilities}
 }
+\value{
+An adjacency matrix
+}
 \description{
 This function allows you to sample a single level stochastic block model.
 }

@@ -13,6 +13,9 @@ sample_mlsbm(z, P, L)
 
 \item{L}{The number of levels to sample}
 }
+\value{
+A list of adjecency matrices -- one for each level of the MLSBM
+}
 \description{
 This function allows you to sample a multilevel stochastic block model.
 }

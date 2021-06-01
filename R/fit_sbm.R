@@ -9,8 +9,10 @@
 #' @param n_iter The number of total MCMC iterations to run.
 #' @param burn The number of burn-in MCMC iterations to discard. The number of saved iterations will be n_iter - burn.
 #' @param verbose Whether to print a progress bar to track MCMC progress. Defaults to true.
-#' @keywords SBM, MLSBM, Gibbs sampling, Bayesian network models
+#' @keywords SBM MLSBM Gibbs Bayesian networks 
+#' @importFrom utils setTxtProgressBar txtProgressBar
 #' @export
+#' @return A list of MCMC samples, including the MAP estimate of cluster indicators (z)
 #' @examples
 #' data(AL)
 #' fit <- fit_sbm(AL[[1]],3)
@@ -45,7 +47,7 @@ fit_sbm <- function(A,
         
         # Step 1. pi
         as = update_counts(zs,K0) + a0
-        pis = rdirichlet_cpp(n=1, as)
+        pis = rdirichlet_cpp(1, as)
         
         # Step 2. z
         zs = update_z_single(zs,A,Ps,pis,1:K0)

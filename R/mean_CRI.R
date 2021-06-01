@@ -6,6 +6,7 @@
 #' @param dig The number of digits to round to
 #' @keywords MCMC
 #' @export
+#' @return A string of mean and 95% quantile interval rounded to 'dig'
 #' @examples
 #' mean_CRI(rnorm(1000))
 

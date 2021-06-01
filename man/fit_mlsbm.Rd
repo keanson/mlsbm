@@ -32,17 +32,19 @@ fit_mlsbm(
 
 \item{verbose}{Whether to print a progress bar to track MCMC progress. Defaults to true.}
 }
+\value{
+A list of MCMC samples, including the MAP estimate of cluster indicators (z)
+}
 \description{
 This function allows you to fit multilevel stochastic block models.
 }
 \examples{
 data(AL)
-fit <- fit_mlsbm(AL,3)
+# increase n_iter in practice
+fit <- fit_mlsbm(AL,3,n_iter = 100)
 }
 \keyword{Bayesian}
 \keyword{Gibbs}
-\keyword{MLSBM,}
-\keyword{SBM,}
-\keyword{models}
-\keyword{network}
-\keyword{sampling,}
+\keyword{MLSBM}
+\keyword{SBM}
+\keyword{networks}

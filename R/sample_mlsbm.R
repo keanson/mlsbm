@@ -6,6 +6,7 @@
 #' @param L The number of levels to sample
 #' @keywords SBM
 #' @export
+#' @return A list of adjecency matrices -- one for each level of the MLSBM 
 #' @examples
 #' n = 100
 #' K = 3

@@ -6,6 +6,7 @@
 #' @param level Confidence level
 #' @keywords Credible intervals
 #' @export
+#' @return A character vector of posterior estimates and intervals
 #' @importFrom stats median quantile
 #' @examples
 #' M <- matrix(rnorm(1000),ncol = 4)

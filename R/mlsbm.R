@@ -8,6 +8,6 @@
 #' @docType package
 #' @name mlsbm
 #' @useDynLib mlsbm
-#' @import Rcpp RcppArmadillo
+#' @import Rcpp
 NULL
 #> NULL

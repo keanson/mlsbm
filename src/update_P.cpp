@@ -70,7 +70,7 @@ NumericMatrix update_P_single(NumericMatrix A,
           }
         }
       }
-      double beta1_star = b10 + sum_A_ij ; 
+      double beta1_star = b10 + sum_A_ij; 
       double beta2_star = b20 + sum_one_minus_A_ij;
       //Rcout << a << "," << b << " : " <<sum_A_ij << "; " << sum_one_minus_A_ij << std::endl;
       NumericVector Pab = Rcpp::rbeta(1,beta1_star,beta2_star);

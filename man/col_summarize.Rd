@@ -13,6 +13,9 @@ col_summarize(MAT, dig = 2, level = 0.95)
 
 \item{level}{Confidence level}
 }
+\value{
+A character vector of posterior estimates and intervals
+}
 \description{
 Function to quickly return credible intervals
 }

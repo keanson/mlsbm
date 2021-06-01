@@ -11,6 +11,9 @@ mean_CRI(y, dig = 2)
 
 \item{dig}{The number of digits to round to}
 }
+\value{
+A string of mean and 95\% quantile interval rounded to 'dig'
+}
 \description{
 Simple function to return the mean (95\% CrI) for a vector
 }

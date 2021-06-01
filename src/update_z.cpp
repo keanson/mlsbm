@@ -35,7 +35,15 @@ NumericVector update_z(NumericVector zs,
             }
             //Rcout << i << "," << k << ":" << pi_star[k] << std::endl;
         }
+        //Rcout << i << ":" << pi_star << std::endl;
         pi_star = exp(pi_star - mean(pi_star)) / sum(exp(pi_star - mean(pi_star)));
+        
+        //check for and replace invalid values
+        if(sum(is_na(pi_star)) == 1)
+        {
+            pi_star[is_na(pi_star)] = 1;
+        }
+        
         //Rcout << i << ":" << pi_star << std::endl;
         NumericVector zi = Rcpp::RcppArmadillo::sample(classes,1,TRUE,pi_star);
         z_ret[i] = zi[0];
@@ -55,19 +63,30 @@ NumericVector update_z_single(NumericVector zs, NumericMatrix A, NumericMatrix P
         NumericVector pi_star(K0);
         for(int k = 0; k < K0; k++)
         {
-            pi_star[k] = pis[k];
+            pi_star[k] = log(pis[k]);
             for(int j = 0; j < n; j++)
             {
                 if(i != j)
                 {
-                    pi_star[k] = pi_star[k] * 
-                        pow(Ps(k,zs[j]-1),A(i,j)) * 
-                        pow((1 - Ps(k,zs[j]-1)),(1-A(i,j)));
+                    // pi_star[k] = pi_star[k] * 
+                    //     pow(Ps(k,zs[j]-1),A(i,j)) * 
+                    //     pow((1 - Ps(k,zs[j]-1)),(1-A(i,j)));
+                    pi_star[k] = ((pi_star[k]) + 
+                        log(pow(Ps(k,zs[j]-1),A(i,j))) + 
+                        log(pow((1 - Ps(k,zs[j]-1)),(1-A(i,j)))));
                 }
             }
             //Rcout << i << "," << k << ":" << pi_star[k] << std::endl;
         }
-        pi_star = pi_star / sum(pi_star);
+        // pi_star = pi_star / sum(pi_star);
+        pi_star = exp(pi_star - mean(pi_star)) / sum(exp(pi_star - mean(pi_star)));
+        
+        //check for and replace invalid values
+        if(sum(is_na(pi_star)) == 1)
+        {
+            pi_star[is_na(pi_star)] = 1;
+        }
+        
         //Rcout << i << ":" << pi_star << std::endl;
         NumericVector zi = Rcpp::RcppArmadillo::sample(classes,1,TRUE,pi_star);
         z_ret[i] = zi[0];

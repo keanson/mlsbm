@@ -5,6 +5,7 @@
 #' @param P A K x K symmetric matrix of community connectivity probabilities
 #' @keywords SBM
 #' @export
+#' @return An adjacency matrix
 #' @examples
 #' n = 100
 #' K = 3

@@ -4,4 +4,4 @@
 #' simulated from an SBM with 3 true clusters
 #'
 #' @format A list of length 3
-"AL"
+"AL" 

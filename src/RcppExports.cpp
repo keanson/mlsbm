@@ -58,6 +58,52 @@ BEGIN_RCPP
     return rcpp_result_gen;
 END_RCPP
 }
+// POW
+double POW(NumericMatrix Ps, double p);
+RcppExport SEXP _mlsbm_POW(SEXP PsSEXP, SEXP pSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< NumericMatrix >::type Ps(PsSEXP);
+    Rcpp::traits::input_parameter< double >::type p(pSEXP);
+    rcpp_result_gen = Rcpp::wrap(POW(Ps, p));
+    return rcpp_result_gen;
+END_RCPP
+}
+// logPow
+double logPow(NumericMatrix Ps, double p);
+RcppExport SEXP _mlsbm_logPow(SEXP PsSEXP, SEXP pSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< NumericMatrix >::type Ps(PsSEXP);
+    Rcpp::traits::input_parameter< double >::type p(pSEXP);
+    rcpp_result_gen = Rcpp::wrap(logPow(Ps, p));
+    return rcpp_result_gen;
+END_RCPP
+}
+// isFinite
+LogicalVector isFinite(NumericVector x);
+RcppExport SEXP _mlsbm_isFinite(SEXP xSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< NumericVector >::type x(xSEXP);
+    rcpp_result_gen = Rcpp::wrap(isFinite(x));
+    return rcpp_result_gen;
+END_RCPP
+}
+// fix_NAs
+NumericVector fix_NAs(NumericVector x);
+RcppExport SEXP _mlsbm_fix_NAs(SEXP xSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< NumericVector >::type x(xSEXP);
+    rcpp_result_gen = Rcpp::wrap(fix_NAs(x));
+    return rcpp_result_gen;
+END_RCPP
+}
 // update_P
 NumericMatrix update_P(List A, NumericVector zs, int K0, double b10, double b20);
 RcppExport SEXP _mlsbm_update_P(SEXP ASEXP, SEXP zsSEXP, SEXP K0SEXP, SEXP b10SEXP, SEXP b20SEXP) {
@@ -136,6 +182,10 @@ static const R_CallMethodDef CallEntries[] = {
     {"_mlsbm_logf_z_given_A_single", (DL_FUNC) &_mlsbm_logf_z_given_A_single, 4},
     {"_mlsbm_rdirichlet_cpp", (DL_FUNC) &_mlsbm_rdirichlet_cpp, 2},
     {"_mlsbm_sample_SBM_fast", (DL_FUNC) &_mlsbm_sample_SBM_fast, 2},
+    {"_mlsbm_POW", (DL_FUNC) &_mlsbm_POW, 2},
+    {"_mlsbm_logPow", (DL_FUNC) &_mlsbm_logPow, 2},
+    {"_mlsbm_isFinite", (DL_FUNC) &_mlsbm_isFinite, 1},
+    {"_mlsbm_fix_NAs", (DL_FUNC) &_mlsbm_fix_NAs, 1},
     {"_mlsbm_update_P", (DL_FUNC) &_mlsbm_update_P, 5},
     {"_mlsbm_update_P_single", (DL_FUNC) &_mlsbm_update_P_single, 5},
     {"_mlsbm_update_counts", (DL_FUNC) &_mlsbm_update_counts, 2},

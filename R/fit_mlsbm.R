@@ -3,6 +3,7 @@
 #' This function allows you to fit multilevel stochastic block models.
 #' @param A An adjacency list of length L, the number of levels. Each level contains an n x n symmetric adjacency matrix.
 #' @param K The number of clusters specified a priori.
+#' @param z_init Logical. Should cluster indicators be initialized using Louvain? If false uses random initialization.
 #' @param a0 Dirichlet prior parameter for cluster sizes for clusters 1,...,K.
 #' @param b10 Beta distribution prior paramter for community connectivity.
 #' @param b20 Beta distribution prior parameter for community connectivity.
@@ -11,6 +12,7 @@
 #' @param verbose Whether to print a progress bar to track MCMC progress. Defaults to true.
 #' @keywords SBM MLSBM Gibbs Bayesian networks 
 #' @importFrom utils setTxtProgressBar txtProgressBar
+#' @importFrom igraph graph_from_adjacency_matrix cluster_louvain
 #' @export
 #' @return A list of MCMC samples, including the MAP estimate of cluster indicators (z)
 #' @examples
@@ -19,9 +21,10 @@
 #' fit <- fit_mlsbm(AL,3,n_iter = 100)
 fit_mlsbm <- function(A,
                       K,
-                      a0 = 0.5,
-                      b10 = 0.5,
-                      b20 = 0.5,
+                      z_init = TRUE,
+                      a0 = 2,
+                      b10 = 1,
+                      b20 = 1,
                       n_iter = 1000,
                       burn = 100,
                       verbose = TRUE)
@@ -29,9 +32,20 @@ fit_mlsbm <- function(A,
     # Initialize parameters
     n = dim(A[[1]])[1] # number of nodes
     K0 = K # putative number of clusters
-    zs = sample(1:K0, 
-                size=n, 
-                replace=TRUE) # initial cluster allocations
+    if(z_init) # initialize clusters?
+    {
+        # use igraph louvain
+        zs = igraph::cluster_louvain(igraph::graph_from_adjacency_matrix(A[[1]],
+                                                                         mode = "undirected",
+                                                                         diag = FALSE))$membership
+    }
+    else
+    {
+        # use random init
+        zs = sample(1:K0, 
+                    size=n, 
+                    replace=TRUE) # initial cluster allocations
+    }
     ns = table(zs) # initial cluster counts
     pis = ns/n # initial cluster proportions
     Ps = array(0.4,c(K0,K0)) # initial connectivity matrix

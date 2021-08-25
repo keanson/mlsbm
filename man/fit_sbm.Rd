@@ -7,9 +7,10 @@
 fit_sbm(
   A,
   K,
-  a0 = 0.5,
-  b10 = 0.5,
-  b20 = 0.5,
+  z_init = TRUE,
+  a0 = 2,
+  b10 = 1,
+  b20 = 1,
   n_iter = 1000,
   burn = 100,
   verbose = TRUE
@@ -19,6 +20,8 @@ fit_sbm(
 \item{A}{An n x n symmetric adjacency matrix.}
 
 \item{K}{The number of clusters specified a priori.}
+
+\item{z_init}{Logical. Should cluster indicators be initialized using Louvain? If false uses random initialization.}
 
 \item{a0}{Dirichlet prior parameter for cluster sizes for clusters 1,...,K.}
 

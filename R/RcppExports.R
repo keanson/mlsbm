@@ -17,6 +17,22 @@ sample_SBM_fast <- function(z, P) {
     .Call('_mlsbm_sample_SBM_fast', PACKAGE = 'mlsbm', z, P)
 }
 
+POW <- function(Ps, p) {
+    .Call('_mlsbm_POW', PACKAGE = 'mlsbm', Ps, p)
+}
+
+logPow <- function(Ps, p) {
+    .Call('_mlsbm_logPow', PACKAGE = 'mlsbm', Ps, p)
+}
+
+isFinite <- function(x) {
+    .Call('_mlsbm_isFinite', PACKAGE = 'mlsbm', x)
+}
+
+fix_NAs <- function(x) {
+    .Call('_mlsbm_fix_NAs', PACKAGE = 'mlsbm', x)
+}
+
 update_P <- function(A, zs, K0, b10, b20) {
     .Call('_mlsbm_update_P', PACKAGE = 'mlsbm', A, zs, K0, b10, b20)
 }

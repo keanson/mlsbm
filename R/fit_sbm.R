@@ -10,9 +10,11 @@
 #' @param n_iter The number of total MCMC iterations to run.
 #' @param burn The number of burn-in MCMC iterations to discard. The number of saved iterations will be n_iter - burn.
 #' @param verbose Whether to print a progress bar to track MCMC progress. Defaults to true.
+#' @param r Resolution parameter for Louvain initialization. Sould be >= 0 and higher values give a larger number of smaller clusters.
 #' @keywords SBM MLSBM Gibbs Bayesian networks 
 #' @importFrom utils setTxtProgressBar txtProgressBar
 #' @importFrom igraph graph_from_adjacency_matrix cluster_louvain
+#' @importFrom bluster mergeCommunities
 #' @export
 #' @return A list of MCMC samples, including the MAP estimate of cluster indicators (z)
 #' @examples
@@ -21,33 +23,38 @@
 fit_sbm <- function(A,
                     K,
                     z_init = TRUE,
-                    a0 = 2,
-                    b10 = 1,
-                    b20 = 1,
+                    a0 = 1,
+                    b10 = 2,
+                    b20 = 2,
                     n_iter = 1000,
                     burn = 100,
-                    verbose = TRUE)
+                    verbose = TRUE,
+                    r = 1.2)
 {
     # Initialize parameters
     n = dim(A)[1] # number of nodes
-    K0 = K # putative number of clusters
+    K0 = K
     if(z_init) # initialize clusters?
     {
-        # use igraph louvain
-        zs = igraph::cluster_louvain(igraph::graph_from_adjacency_matrix(A,
-                                                                    mode = "undirected",
-                                                                    diag = FALSE))$membership
+        print("Initializing using igraph")
+        # use igraph
+        G = igraph::graph_from_adjacency_matrix(A,mode = "undirected",diag = FALSE)
+        fit_init = igraph::cluster_louvain(G, resolution = r)
+        zinit = fit_init$membership
+        zinit = as.numeric(bluster::mergeCommunities(G,as.factor(zinit),number = K0))
+        zs = remap_canonical2(zinit)
     }
     else
     {
         # use random init
-        zs = sample(1:K0, 
+        zinit = sample(1:K0, 
                     size=n, 
                     replace=TRUE) # initial cluster allocations
+        zs = remap_canonical2(zinit)
     }
     ns = table(zs) # initial cluster counts
     pis = ns/n # initial cluster proportions
-    Ps = array(0.4,c(K0,K0)) # initial connectivity matrix
+    Ps = array(0.1,c(K0,K0)) # initial connectivity matrix
     
     n_sim = n_iter - burn # number of stored simulations
     Z = array(0,c(n_sim,n)) # storage for cluster assignments
@@ -65,6 +72,11 @@ fit_sbm <- function(A,
         
         # Step 2. z
         zs = update_z_single(zs,A,Ps,pis,1:K0)
+        print(table(zs))
+        if(any(update_counts(zs,K0) < 10))
+        {
+            zs = zinit
+        }
         
         # Step 3. P
         Ps = update_P_single(A,zs,K0,b10,b20)

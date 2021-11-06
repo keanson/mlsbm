@@ -1,6 +1,6 @@
 Package: mlsbm
 Title: Efficient Estimation of Bayesian SBMs & MLSBMs
-Version: 0.99.3
+Version: 0.99.4
 Authors@R: 
     c(person(given = "Carter",
            family = "Allen",
@@ -17,6 +17,6 @@ LazyData: true
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.1.1
 LinkingTo: Rcpp, RcppArmadillo
-Imports: Rcpp, igraph
+Imports: Rcpp, igraph, stats, bluster
 Depends: 
     R (>= 2.10)

@@ -36,16 +36,19 @@ NumericVector update_z(NumericVector zs,
             //Rcout << i << "," << k << ":" << pi_star[k] << std::endl;
         }
         //Rcout << i << ":" << pi_star << std::endl;
-        pi_star = exp(pi_star - mean(pi_star)) / sum(exp(pi_star - mean(pi_star)));
-        
-        //check for and replace invalid values
-        if(sum(is_na(pi_star)) == 1)
+        NumericVector pi_star2 (pi_star.length());
+        if(any(abs(pi_star) > 700).is_true())
         {
-            pi_star[is_na(pi_star)] = 1;
+            pi_star2[which_max(pi_star)] = 1;
+        }
+        else
+        {
+            pi_star2 = exp(pi_star) / sum(exp(pi_star));
         }
         
-        //Rcout << i << ":" << pi_star << std::endl;
-        NumericVector zi = Rcpp::RcppArmadillo::sample(classes,1,TRUE,pi_star);
+        // pi_star2 = exp(pi_star) / sum(exp(pi_star));
+        //Rcout << i << ":" << pi_star2 << std::endl;
+        NumericVector zi = Rcpp::RcppArmadillo::sample(classes,1,TRUE,pi_star2);
         z_ret[i] = zi[0];
     }
     return z_ret;
@@ -78,17 +81,21 @@ NumericVector update_z_single(NumericVector zs, NumericMatrix A, NumericMatrix P
             }
             //Rcout << i << "," << k << ":" << pi_star[k] << std::endl;
         }
-        // pi_star = pi_star / sum(pi_star);
-        pi_star = exp(pi_star - mean(pi_star)) / sum(exp(pi_star - mean(pi_star)));
-        
-        //check for and replace invalid values
-        if(sum(is_na(pi_star)) == 1)
-        {
-            pi_star[is_na(pi_star)] = 1;
-        }
-        
+        //pi_star = pi_star / n;
         //Rcout << i << ":" << pi_star << std::endl;
-        NumericVector zi = Rcpp::RcppArmadillo::sample(classes,1,TRUE,pi_star);
+        NumericVector pi_star2 (pi_star.length());
+        if(any(abs(pi_star) > 700).is_true())
+        {
+            pi_star2[which_max(pi_star)] = 1;
+        }
+        else
+        {
+            pi_star2 = exp(pi_star) / sum(exp(pi_star));
+        }
+
+        // pi_star2 = exp(pi_star) / sum(exp(pi_star));
+        //Rcout << i << ":" << pi_star2 << std::endl;
+        NumericVector zi = Rcpp::RcppArmadillo::sample(classes,1,TRUE,pi_star2);
         z_ret[i] = zi[0];
     }
     return z_ret;

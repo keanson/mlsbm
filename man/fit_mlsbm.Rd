@@ -13,7 +13,8 @@ fit_mlsbm(
   b20 = 1,
   n_iter = 1000,
   burn = 100,
-  verbose = TRUE
+  verbose = TRUE,
+  r = 1.2
 )
 }
 \arguments{
@@ -34,6 +35,8 @@ fit_mlsbm(
 \item{burn}{The number of burn-in MCMC iterations to discard. The number of saved iterations will be n_iter - burn.}
 
 \item{verbose}{Whether to print a progress bar to track MCMC progress. Defaults to true.}
+
+\item{r}{Resolution parameter for Louvain initialization. Sould be >= 0 and higher values give a larger number of smaller clusters.}
 }
 \value{
 A list of MCMC samples, including the MAP estimate of cluster indicators (z)

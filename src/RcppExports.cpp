@@ -6,6 +6,11 @@
 
 using namespace Rcpp;
 
+#ifdef RCPP_USE_GLOBAL_ROSTREAM
+Rcpp::Rostream<true>&  Rcpp::Rcout = Rcpp::Rcpp_cout_get();
+Rcpp::Rostream<false>& Rcpp::Rcerr = Rcpp::Rcpp_cerr_get();
+#endif
+
 // logf_z_given_A
 double logf_z_given_A(NumericVector zs, List A, NumericVector pis, NumericMatrix Ps);
 RcppExport SEXP _mlsbm_logf_z_given_A(SEXP zsSEXP, SEXP ASEXP, SEXP pisSEXP, SEXP PsSEXP) {
@@ -104,6 +109,40 @@ BEGIN_RCPP
     return rcpp_result_gen;
 END_RCPP
 }
+// is_any
+LogicalVector is_any(NumericVector x, double c);
+RcppExport SEXP _mlsbm_is_any(SEXP xSEXP, SEXP cSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< NumericVector >::type x(xSEXP);
+    Rcpp::traits::input_parameter< double >::type c(cSEXP);
+    rcpp_result_gen = Rcpp::wrap(is_any(x, c));
+    return rcpp_result_gen;
+END_RCPP
+}
+// whichmax
+double whichmax(NumericVector x);
+RcppExport SEXP _mlsbm_whichmax(SEXP xSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< NumericVector >::type x(xSEXP);
+    rcpp_result_gen = Rcpp::wrap(whichmax(x));
+    return rcpp_result_gen;
+END_RCPP
+}
+// fixpi
+NumericVector fixpi(NumericVector pi_star);
+RcppExport SEXP _mlsbm_fixpi(SEXP pi_starSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< NumericVector >::type pi_star(pi_starSEXP);
+    rcpp_result_gen = Rcpp::wrap(fixpi(pi_star));
+    return rcpp_result_gen;
+END_RCPP
+}
 // update_P
 NumericMatrix update_P(List A, NumericVector zs, int K0, double b10, double b20);
 RcppExport SEXP _mlsbm_update_P(SEXP ASEXP, SEXP zsSEXP, SEXP K0SEXP, SEXP b10SEXP, SEXP b20SEXP) {
@@ -186,6 +225,9 @@ static const R_CallMethodDef CallEntries[] = {
     {"_mlsbm_logPow", (DL_FUNC) &_mlsbm_logPow, 2},
     {"_mlsbm_isFinite", (DL_FUNC) &_mlsbm_isFinite, 1},
     {"_mlsbm_fix_NAs", (DL_FUNC) &_mlsbm_fix_NAs, 1},
+    {"_mlsbm_is_any", (DL_FUNC) &_mlsbm_is_any, 2},
+    {"_mlsbm_whichmax", (DL_FUNC) &_mlsbm_whichmax, 1},
+    {"_mlsbm_fixpi", (DL_FUNC) &_mlsbm_fixpi, 1},
     {"_mlsbm_update_P", (DL_FUNC) &_mlsbm_update_P, 5},
     {"_mlsbm_update_P_single", (DL_FUNC) &_mlsbm_update_P_single, 5},
     {"_mlsbm_update_counts", (DL_FUNC) &_mlsbm_update_counts, 2},

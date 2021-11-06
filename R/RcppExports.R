@@ -33,6 +33,18 @@ fix_NAs <- function(x) {
     .Call('_mlsbm_fix_NAs', PACKAGE = 'mlsbm', x)
 }
 
+is_any <- function(x, c) {
+    .Call('_mlsbm_is_any', PACKAGE = 'mlsbm', x, c)
+}
+
+whichmax <- function(x) {
+    .Call('_mlsbm_whichmax', PACKAGE = 'mlsbm', x)
+}
+
+fixpi <- function(pi_star) {
+    .Call('_mlsbm_fixpi', PACKAGE = 'mlsbm', pi_star)
+}
+
 update_P <- function(A, zs, K0, b10, b20) {
     .Call('_mlsbm_update_P', PACKAGE = 'mlsbm', A, zs, K0, b10, b20)
 }

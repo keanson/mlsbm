@@ -29,7 +29,7 @@ fit_mlsbm <- function(A,
                       b20 = 1,
                       n_iter = 1000,
                       burn = 100,
-                      verbose = TRUE,
+                      verbose = FALSE,
                       r = 1.2)
 {
     # Initialize parameters
@@ -64,7 +64,7 @@ fit_mlsbm <- function(A,
     draw_logf_z_given_A = rep(0,n_sim) # P(z|Data) for MAP estimate of z
     
     start.time<-proc.time()
-    if(verbose) pb <- txtProgressBar(min = 0, max = n_iter, style = 3)
+    pb <- txtProgressBar(min = 0, max = n_iter, style = 3)
     for (i in 1:n_iter){
         # TODO: use pointers
         # Step 1. pi
@@ -73,7 +73,7 @@ fit_mlsbm <- function(A,
         
         # Step 2. z
         zs = update_z(zs,A,Ps,pis,1:K0)
-        print(table(zs))
+        if(verbose) print(table(zs))
         if(any(update_counts(zs,K0) < 10))
         {
             zs = zinit
@@ -94,11 +94,11 @@ fit_mlsbm <- function(A,
             PM[j,,] = Ps
             draw_logf_z_given_A[j] = lz
         }
-        if(verbose) setTxtProgressBar(pb, i)
+        setTxtProgressBar(pb, i)
     }
-    if(verbose) close(pb)
+    close(pb)
     run.time<-proc.time()-start.time
-    if(verbose) cat("Finished MCMC after",run.time[1],"seconds")
+    cat("Finished MCMC after",run.time[1],"seconds")
     
     ret_list <- list(A = A,
                      K = K,

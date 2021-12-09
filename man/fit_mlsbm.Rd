@@ -13,7 +13,7 @@ fit_mlsbm(
   b20 = 1,
   n_iter = 1000,
   burn = 100,
-  verbose = TRUE,
+  verbose = FALSE,
   r = 1.2
 )
 }

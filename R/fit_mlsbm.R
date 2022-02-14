@@ -40,8 +40,24 @@ fit_mlsbm <- function(A,
         print("Initializing using igraph")
         # use igraph
         G = igraph::graph_from_adjacency_matrix(A[[1]],mode = "undirected",diag = FALSE)
-        fit_init = igraph::cluster_louvain(G, resolution = r)
-        zinit = fit_init$membership
+        
+        # check resolutions for inits
+        initialized = FALSE
+        while(!initialized)
+        {
+            fit_init = igraph::cluster_louvain(G, resolution = r)
+            zinit = fit_init$membership
+            K_found = length(unique(zinit))
+            if(K_found > K)
+            {
+                initialized = TRUE
+            }
+            else
+            {
+                r = r*1.05
+            }
+        }
+        
         zinit = as.numeric(bluster::mergeCommunities(G,as.factor(zinit),number = K0))
         zs = remap_canonical2(zinit)
     }

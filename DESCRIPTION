@@ -17,6 +17,6 @@ LazyData: true
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.1.1
 LinkingTo: Rcpp, RcppArmadillo
-Imports: Rcpp, igraph, stats, bluster
+Imports: Rcpp, igraph, stats, bluster, tidyr, tidyselect, rlang, dplyr, ggplot2, ggraph, patchwork
 Depends: 
     R (>= 2.10)

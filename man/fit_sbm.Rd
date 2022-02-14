@@ -13,7 +13,7 @@ fit_sbm(
   b20 = 2,
   n_iter = 1000,
   burn = 100,
-  verbose = TRUE,
+  verbose = FALSE,
   r = 1.2
 )
 }

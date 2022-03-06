@@ -7,7 +7,7 @@
 fit_sbm(
   A,
   K,
-  z_init = TRUE,
+  z_init = NULL,
   a0 = 1,
   b10 = 2,
   b20 = 2,
@@ -22,7 +22,7 @@ fit_sbm(
 
 \item{K}{The number of clusters specified a priori.}
 
-\item{z_init}{Logical. Should cluster indicators be initialized using Louvain? If false uses random initialization.}
+\item{z_init}{Initialized cluster indicators. If NULL, will initialize automatically with Louvain algorithm.}
 
 \item{a0}{Dirichlet prior parameter for cluster sizes for clusters 1,...,K.}
 

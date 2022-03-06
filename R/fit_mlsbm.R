@@ -64,6 +64,7 @@ fit_mlsbm <- function(A,
     else
     {
         zs = remap_canonical2(as.numeric(z_init))
+        zinit = z_init
     }
     ns = table(zs) # initial cluster counts
     pis = ns/n # initial cluster proportions

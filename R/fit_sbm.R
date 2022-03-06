@@ -3,7 +3,7 @@
 #' This function allows you to fit single level stochastic block models.
 #' @param A An n x n symmetric adjacency matrix.
 #' @param K The number of clusters specified a priori.
-#' @param z_init Logical. Should cluster indicators be initialized using Louvain? If false uses random initialization.
+#' @param z_init Initialized cluster indicators. If NULL, will initialize automatically with Louvain algorithm.
 #' @param a0 Dirichlet prior parameter for cluster sizes for clusters 1,...,K.
 #' @param b10 Beta distribution prior paramter for community connectivity.
 #' @param b20 Beta distribution prior parameter for community connectivity.
@@ -22,7 +22,7 @@
 #' fit <- fit_sbm(AL[[1]],3)
 fit_sbm <- function(A,
                     K,
-                    z_init = TRUE,
+                    z_init = NULL,
                     a0 = 1,
                     b10 = 2,
                     b20 = 2,
@@ -34,7 +34,7 @@ fit_sbm <- function(A,
     # Initialize parameters
     n = dim(A)[1] # number of nodes
     K0 = K
-    if(z_init) # initialize clusters?
+    if(is.null(z_init)) # initialize clusters?
     {
         print("Initializing using igraph")
         # use igraph
@@ -62,11 +62,7 @@ fit_sbm <- function(A,
     }
     else
     {
-        # use random init
-        zinit = sample(1:K0, 
-                    size=n, 
-                    replace=TRUE) # initial cluster allocations
-        zs = remap_canonical2(zinit)
+        zs = remap_canonical2(as.numeric(z_init))
     }
     ns = table(zs) # initial cluster counts
     pis = ns/n # initial cluster proportions

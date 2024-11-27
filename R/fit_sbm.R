@@ -70,10 +70,12 @@ fit_sbm <- function(A,
     Ps = array(0.1,c(K0,K0)) # initial connectivity matrix
     
     n_sim = n_iter - burn # number of stored simulations
-    Z = array(0,c(n_sim,n)) # storage for cluster assignments
-    PI = array(0,c(n_sim,K0)) # storage for cluster proportions
-    PM = array(0,c(n_sim,K0,K0)) # storage for community connection params
-    draw_logf_z_given_A = rep(0,n_sim) # P(z|Data) for MAP estimate of z
+    # Z = array(0,c(n_sim,n)) # storage for cluster assignments
+    # PI = array(0,c(n_sim,K0)) # storage for cluster proportions
+    # PM = array(0,c(n_sim,K0,K0)) # storage for community connection params
+    # draw_logf_z_given_A = rep(0,n_sim) # P(z|Data) for MAP estimate of z
+  
+    res = -Inf # storage the largest draw_logf_z_given_A
     
     pb <- txtProgressBar(min = 0, max = n_iter, style = 3)
     start.time<-proc.time()
@@ -100,11 +102,16 @@ fit_sbm <- function(A,
         # Store values
         if(i > burn)
         {
-            j = i - burn
-            Z[j,] = zs
-            PI[j,] = pis
-            PM[j,,] = Ps
-            draw_logf_z_given_A[j] = lz
+            # j = i - burn
+            # Z[j,] = zs
+            # PI[j,] = pis
+            # PM[j,,] = Ps
+            # draw_logf_z_given_A[j] = lz
+          if(res < lz){
+            res <- lz
+            z <- zs
+            P <- Ps
+          }
         }
         setTxtProgressBar(pb, i)
     }
@@ -112,15 +119,17 @@ fit_sbm <- function(A,
     run.time<-proc.time()-start.time
     cat("Finished MCMC after",run.time[1],"seconds")
     
-    ret_list <- list(A = A,
-                     K = K,
-                     Z = Z,
-                     PI = PI,
-                     PM = PM,
-                     logf = draw_logf_z_given_A,
-                     z = Z[which.max(draw_logf_z_given_A),],
-                     P = PM[which.max(draw_logf_z_given_A),,],
-                     pi = PI[which.max(draw_logf_z_given_A),])
+    # ret_list <- list(A = A,
+    #                 K = K,
+    #                 Z = Z,
+    #                 PI = PI,
+    #                 PM = PM,
+    #                 logf = draw_logf_z_given_A,
+    #                 z = Z[which.max(draw_logf_z_given_A),],
+    #                 P = PM[which.max(draw_logf_z_given_A),,],
+    #                 pi = PI[which.max(draw_logf_z_given_A),])
+    ret_list <- list(z = z,
+                     P = P)
     class(ret_list) <- "SBM"
     return(ret_list)
 }

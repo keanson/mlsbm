@@ -36,26 +36,29 @@ fit_sbm <- function(A,
     K0 = K
     if(is.null(z_init)) # initialize clusters?
     {
-        print("Initializing using igraph")
+        print("Initializing using igraph, cluster fluid communities")
         # use igraph
         G = igraph::graph_from_adjacency_matrix(A,mode = "undirected",diag = FALSE)
         
         # check resolutions for inits
         initialized = FALSE
-        while(!initialized)
-        {
-            fit_init = igraph::cluster_louvain(G, resolution = r)
-            zinit = fit_init$membership
-            K_found = length(unique(zinit))
-            if(K_found > K)
-            {
-                initialized = TRUE
-            }
-            else
-            {
-                r = r*1.05
-            }
-        }
+        # while(!initialized)
+        # {
+        #     fit_init = igraph::cluster_louvain(G, resolution = r)
+        #     zinit = fit_init$membership
+        #     K_found = length(unique(zinit))
+        #     if(K_found > K)
+        #     {
+        #         initialized = TRUE
+        #     }
+        #     else
+        #     {
+        #         r = r*1.05
+        #     }
+        # }
+        fit_init = igraph::cluster_fluid_communities(G, K0)
+        zinit = fit_init$membership
+        initialized = TRUE
         
         zinit = as.numeric(bluster::mergeCommunities(G,as.factor(zinit),number = K0))
         zs = remap_canonical2(zinit)
